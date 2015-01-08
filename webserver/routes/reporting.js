@@ -31,7 +31,7 @@ module.exports.add_routes = function (app, storage){
   // List of hosts and url's
   //-------------------------------
   app.get('/', function(req, res){
-    res.render('list.html', {title: 'watchmen'});
+    res.render('simple.html', {title: 'watchmen'});
   });
 
   //-------------------------------

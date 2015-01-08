@@ -1,0 +1,76 @@
+<script id='services_list_template' type="text/x-handlebars-template">
+
+<table class="table-services table sorted table-striped table-condensed">
+
+  <tbody>
+
+  {{#each services}}
+  <tr class="result-{{#if enabled}}{{data.status}}{{else}}disabled{{/if}}">
+    <tr>
+      {{#ifvalue data.status value="error"}}
+          <span class="label label-danger">offline</span>
+      {{/ifvalue}}
+
+      {{#ifvalue data.status value="success"}}
+          <span class="btn btn-success"> {{host.name}} / {{name}}</span>
+      {{/ifvalue}}
+
+
+      <br/>
+      {{#if data.outages}}
+      <span class="label label-danger">{{data.outages}}</span>
+      {{#if data.last_outage}}
+      {{dateFormat data.last_outage format="MMM Do, h:mm:ss"}}
+      <br />
+      <time datetime='{{dateFormat data.last_outage format="MMMM Do, h:mm:ss"}}'>{{dateFormat data.last_outage ago=true}}</time>
+      {{/if}}
+      {{/if}}
+
+
+      {{#if data.warnings}}
+      <span class="label label-warning">{{data.warnings}}</span>
+      {{#if data.last_warning}}
+      {{dateFormat data.last_warning format="MMM Do, h:mm:ss"}}
+      <time datetime='{{dateFormat data.last_warning format="MMMM Do, h:mm:ss"}}'>{{dateFormat data.last_warning ago=true}}</time>
+      {{/if}}
+      {{/if}}
+
+
+      {{ping_service_name}}
+
+      {{#if data.avg_response_time}}
+      <span class="label label-default">{{data.avg_response_time}}</span>
+      {{/if}}
+
+      {{#if data.uptime}}
+      <a class="name" href="/details?service={{name}}&host={{host.name}}">
+        <span>
+        {{data.uptime}}%
+        </span>
+      </a>
+      {{/if}}
+
+    </tr>
+
+
+  </tr>
+  {{/each}}
+  </tbody>
+</table>
+</script>
+
+<div class="filter-container">
+  <span class="glyphicon glyphicon-search"></span>
+  <input class="form-control" type="text" id="filter" placeholder="filter by host name"/>
+</div>
+
+<div id="data_holder"></div>
+
+<script>
+$(document).ready(function() {
+  $('#filter').keydown(function(event){
+    watchmen_client.bind(_data, $(this).val());
+  });
+  watchmen_client.refresh();
+});
+</script>
