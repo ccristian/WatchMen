@@ -1,62 +1,84 @@
 <script id='services_list_template' type="text/x-handlebars-template">
 
-<table class="table-services table sorted table-striped table-condensed">
+  <div class="container-fluid" align="center">
 
-  <tbody>
+    <div class="row">
 
-  {{#each services}}
-  <tr class="result-{{#if enabled}}{{data.status}}{{else}}disabled{{/if}}">
-    <tr>
-      {{#ifvalue data.status value="error"}}
-          <span class="label label-danger">offline</span>
-      {{/ifvalue}}
+      {{#each services}}
+      <div class="col-md-2 innerbox" style="margin-bottom:12px;">
 
-      {{#ifvalue data.status value="success"}}
-          <span class="btn btn-success"> {{host.name}} / {{name}}</span>
-      {{/ifvalue}}
+        <div align="left" >
 
-
-      <br/>
-      {{#if data.outages}}
-      <span class="label label-danger">{{data.outages}}</span>
-      {{#if data.last_outage}}
-      {{dateFormat data.last_outage format="MMM Do, h:mm:ss"}}
-      <br />
-      <time datetime='{{dateFormat data.last_outage format="MMMM Do, h:mm:ss"}}'>{{dateFormat data.last_outage ago=true}}</time>
-      {{/if}}
-      {{/if}}
+        {{#ifvalue data.status value="error"}}
+        <a class="name" href="/details?service={{name}}&host={{host.name}}" >
+         <span class="label label-danger innerbox1">{{host.name}}  {{name}}</span>
+        </a>
+        {{/ifvalue}}
 
 
-      {{#if data.warnings}}
-      <span class="label label-warning">{{data.warnings}}</span>
-      {{#if data.last_warning}}
-      {{dateFormat data.last_warning format="MMM Do, h:mm:ss"}}
-      <time datetime='{{dateFormat data.last_warning format="MMMM Do, h:mm:ss"}}'>{{dateFormat data.last_warning ago=true}}</time>
-      {{/if}}
-      {{/if}}
+        {{#ifvalue data.status value="success"}}
+        <a class="innerbox1" href="/details?service={{name}}&host={{host.name}}">
+          <span class="label label-success innerbox1"> {{host.name}}  {{name}}</span>
+        </a>
+        {{/ifvalue}}
+
+        </div>
 
 
-      {{ping_service_name}}
 
-      {{#if data.avg_response_time}}
-      <span class="label label-default">{{data.avg_response_time}}</span>
-      {{/if}}
+        <div align="left" >
 
-      {{#if data.uptime}}
-      <a class="name" href="/details?service={{name}}&host={{host.name}}">
-        <span>
-        {{data.uptime}}%
-        </span>
-      </a>
-      {{/if}}
-
-    </tr>
+        {{#if data.outages}}
+        <span class="label label-danger pull-left" >{{data.outages}}</span>
+        {{/if}}
 
 
-  </tr>
-  {{/each}}
-  </tbody>
-</table>
+        {{#if data.warnings}}
+        <span class="label label-warning pull-left">{{data.warnings}}</span>
+        {{/if}}
+
+
+
+        {{#if data.avg_response_time}}
+        <span class="label label-default pull-left">{{data.avg_response_time}}</span>
+        {{/if}}
+
+
+          {{#ifvalue data.status value="success"}}
+            {{#if data.uptime}}
+            <a class="name" href="/details?service={{name}}&host={{host.name}}">
+              <span class="label label-success innerbox2 ">{{data.uptime}}%</span>
+            </a>
+            {{/if}}
+          {{/ifvalue}}
+
+          {{#ifvalue data.status value="error"}}
+          <a class="name" href="/details?service={{name}}&host={{host.name}}" >
+            <span class="label label-danger innerbox2 ">{{data.uptime}}%</span>
+          </a>
+          {{/ifvalue}}
+
+
+
+        </div>
+
+      </div>
+
+      {{/each}}
+
+
+
+
+  </div>
+  </div>
+
+
+
+
+
+
+
+
 </script>
 
 <div class="filter-container">
