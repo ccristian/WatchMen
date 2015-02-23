@@ -11,14 +11,14 @@
 
         {{#ifvalue data.status value="error"}}
         <a class="name" href="/details?service={{name}}&host={{host.name}}" >
-         <span class="label label-danger innerbox1">{{host.name}}  {{name}}</span>
+         <span class="label label-danger innerbox1">{{host.group}} {{host.name}}  {{name}}</span>
         </a>
         {{/ifvalue}}
 
 
         {{#ifvalue data.status value="success"}}
         <a class="innerbox1" href="/details?service={{name}}&host={{host.name}}">
-          <span class="label label-success innerbox1"> {{host.name}}  {{name}}</span>
+          <span class="label label-success innerbox1">{{host.group}} {{host.name}}  {{name}}</span>
         </a>
         {{/ifvalue}}
 
